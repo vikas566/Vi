@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SaaS Landing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- Hero Section -->
+  <section class="text-center py-20 bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+    <h1 class="text-5xl font-bold mb-4">Grow Your Business with Our SaaS</h1>
+    <p class="text-xl mb-6">Powerful tools to scale faster and smarter.</p>
+    <a href="#signup" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold">Get Started</a>
+  </section>
+
+  <!-- Features -->
+  <section class="py-16 max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+    <div><h3 class="text-xl font-bold">🚀 Fast</h3><p>Scale your operations with ease.</p></div>
+    <div><h3 class="text-xl font-bold">🔒 Secure</h3><p>Enterprise-grade security for your data.</p></div>
+    <div><h3 class="text-xl font-bold">⚡ Easy</h3><p>Simple UI for maximum productivity.</p></div>
+  </section>
+
+  <!-- Sign Up -->
+  <section id="signup" class="py-20 bg-gray-100 text-center">
+    <h2 class="text-3xl font-bold mb-4">Sign Up for Early Access</h2>
+    <form id="signupForm" class="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 space-y-4">
+      <input type="text" name="name" placeholder="Your Name" required class="w-full border p-3 rounded" />
+      <input type="email" name="email" placeholder="Your Email" required class="w-full border p-3 rounded" />
+      <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-lg w-full">Sign Up</button>
+    </form>
+    <p id="responseMsg" class="mt-4 text-green-600"></p>
+  </section>
+
+  <script>
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = { name: form.name.value, email: form.email.value };
+
+      const res = await fetch('http://localhost:5000/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      document.getElementById('responseMsg').innerText = result.message || 'Check your email!';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
